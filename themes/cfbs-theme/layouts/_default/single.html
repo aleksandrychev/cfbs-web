@@ -35,13 +35,7 @@
                     </div>
                     </div>
                     <div class="module-page_subtitle">{{ .Params.Description }}</div>
-
-                    <div class="top-links">
-                        <a href="{{ .Params.Repo }}/tree/{{ .Params.Commit }}/{{ .Params.Subdirectory }}" target="_blank">Repository</a>
-                        {{ if .Params.Documentation }}<a href="{{ .Params.Documentation }}" target="_blank">Documentation</a>{{ end }}
-                        {{ if .Params.Website }}<a href="{{ .Params.Website }}" target="_blank">Website</a>{{ end }}
-                        <a href="{{ .Params.Repo }}/issues" target="_blank">Report issue</a>
-                    </div>
+                    {{ partial "top-links" . }}
                 </div>
                 <div>
                     <a class="btn btn-secondary btn-secondary-light display-none" href="#">follow</a>

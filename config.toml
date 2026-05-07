@@ -25,3 +25,9 @@ baseUrl = "https://build.cfengine.com"
 [markup]
 	[markup.highlight]
 		noClasses = false
+
+[params.gitProviders.repositoryLinkTemplates]
+"github.com"    = "%s/tree/%s/%s"
+"gitlab.com"    = "%s/-/tree/%s/%s"
+"bitbucket.org" = "%s/src/%s/%s"
+"codeberg.org"  = "%s/src/commit/%s/%s"

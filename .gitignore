@@ -7,3 +7,4 @@ scripts/get_cache.json.log
 node_modules/
 static/js/bundles
 .vscode/
+.hugo_build.lock

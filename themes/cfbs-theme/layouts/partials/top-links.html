@@ -1,0 +1,16 @@
+{{ $repo   := .Params.Repo }}
+{{ $commit := .Params.Commit }}
+{{ $subdir := default "" .Params.Subdirectory }}
+{{ $host := (urls.Parse $repo).Host | default $repo }}
+{{ $pattern := index site.Params.gitProviders.repositoryLinkTemplates $host }}
+<div class="top-links">
+{{ if $pattern }}
+  <a href="{{ printf $pattern $repo $commit $subdir }}" target="_blank">Repository</a>
+{{ else }}
+  {{ warnf "Unknown git provider for repo: %s" $repo }}
+  <a href="{{ $repo }}" target="_blank">Repository</a>
+{{ end }}
+    {{ if .Params.Documentation }}<a href="{{ .Params.Documentation }}" target="_blank">Documentation</a>{{ end }}
+    {{ if .Params.Website }}<a href="{{ .Params.Website }}" target="_blank">Website</a>{{ end }}
+    <a href="{{ .Params.Repo }}/issues" target="_blank">Report issue</a>
+</div>
