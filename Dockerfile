@@ -1,20 +1,15 @@
-FROM node:26-alpine AS build
+FROM ghcr.io/gohugoio/hugo:v0.169.0@sha256:a146e0639230bbc73358e6563240f0a6103466f0390b80a457c775068ec802a9 AS build
 ARG GITHUB_USERNAME_TOKEN
 
 ARG SEARCH_ENGINES_DISABLED
 ENV HUGO_PARAMS_SEARCHENGINES_DISABLED=$SEARCH_ENGINES_DISABLED
 
 WORKDIR /build-website
-# go and git are needed by Hugo to download modules (llms-txt)
-RUN apk add --no-cache go git
-ADD https://github.com/gohugoio/hugo/releases/download/v0.168.0/hugo_0.168.0_Linux-64bit.tar.gz hugo.tar.gz
-RUN echo "fada83ad56bb27ed4cb7dd81590303bdac16140f944ac4e66fc248117e2d5594  hugo.tar.gz" | sha256sum -c
-RUN tar -zxvf hugo.tar.gz
-COPY package-lock.json package.json ./
+COPY --chown=hugo:hugo package-lock.json package.json ./
 RUN npm ci
-COPY . ./
+COPY --chown=hugo:hugo . ./
 RUN npm run build
-RUN ./hugo --logLevel info
+RUN hugo --logLevel info
 RUN npm run create-modules-json
 RUN rm ./public/package.json
 RUN rm ./public/package-lock.json
